@@ -22,7 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements RecipeAdapter.OnRecipeActionListener {
 
     private RecyclerView recyclerView;
     private RecipeAdapter recipeAdapter;
@@ -38,9 +38,9 @@ public class HomeActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progress_bar);
         recipeList = new ArrayList<>();
 
-        // Set up RecyclerView
+        // Set up RecyclerView with a GridLayoutManager
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        recipeAdapter = new RecipeAdapter(this, recipeList);
+        recipeAdapter = new RecipeAdapter(recipeList, this);
         recyclerView.setAdapter(recipeAdapter);
 
         // Fetch recipes from Firebase
@@ -71,5 +71,32 @@ public class HomeActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
             }
         });
+    }
+
+    // Implementing the RecipeAdapter.OnRecipeActionListener methods
+
+    @Override
+    public void onEditRecipe(Recipe recipe) {
+        // Handle edit recipe action
+        Toast.makeText(this, "Edit recipe: " + recipe.getTitle(), Toast.LENGTH_SHORT).show();
+        // You can start a new activity to edit the recipe or open a dialog
+    }
+
+    @Override
+    public void onDeleteRecipe(String recipeId) {
+        // Handle delete recipe action
+        DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("recipes").child(recipeId);
+        databaseRef.removeValue()
+                .addOnSuccessListener(aVoid -> Toast.makeText(HomeActivity.this, "Recipe deleted", Toast.LENGTH_SHORT).show())
+                .addOnFailureListener(e -> Toast.makeText(HomeActivity.this, "Failed to delete recipe", Toast.LENGTH_SHORT).show());
+    }
+
+    @Override
+    public void onMarkAsPurchased(String recipeId) {
+        // Handle mark as purchased action
+        DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("recipes").child(recipeId).child("purchased");
+        databaseRef.setValue(true)
+                .addOnSuccessListener(aVoid -> Toast.makeText(HomeActivity.this, "Marked as purchased", Toast.LENGTH_SHORT).show())
+                .addOnFailureListener(e -> Toast.makeText(HomeActivity.this, "Failed to mark as purchased", Toast.LENGTH_SHORT).show());
     }
 }

@@ -18,14 +18,10 @@ import com.example.myrecipebook.models.HomeItemModel;
 
 import java.util.List;
 
-//ADAPTER + VIEWHOLDER
-
-//5.ADAPTER (manage all the viewholders)
 public class HomeItemAdapter extends RecyclerView.Adapter<HomeItemAdapter.ViewHolder> {
 
-   Context context;
-   List<HomeItemModel> list;
-
+    Context context;
+    List<HomeItemModel> list;
 
     public HomeItemAdapter(Context context, List<HomeItemModel> list) {
         this.context = context;
@@ -34,55 +30,46 @@ public class HomeItemAdapter extends RecyclerView.Adapter<HomeItemAdapter.ViewHo
 
     @NonNull
     @Override
-    //create a new list row object= new view holder object (one line of view)
-    //inside we inflate the view of itemView and return new ViewHolder object containing this layout
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        //inflater create view object from xml file (home_item.xml)
-        //then wrap it in view older object
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.home_item, parent, false));
+        // Inflate the layout for each item in the RecyclerView
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_item, parent, false);
+        return new ViewHolder(view);
     }
 
-    //set the view holder properties according to the object is displayed (Bind data to line)
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        int itemPosition = position;
-        holder.imageView.setImageResource(list.get(position).getImage());
-        holder.name.setText(list.get(position).getName());
+        // Bind data to the views
+        HomeItemModel item = list.get(position);
+        holder.imageView.setImageResource(item.getImage());
+        holder.name.setText(item.getName());
 
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putString("categoryName", list.get(itemPosition).getName());
-                Navigation.findNavController(v).navigate(R.id.nav_categories, bundle);
-            }
+        // Set click listener for the card
+        holder.cardView.setOnClickListener(v -> {
+            // Create a bundle to pass data to the next screen
+            Bundle bundle = new Bundle();
+            bundle.putString("categoryName", item.getName());
+
+            // Navigate to the RecipeDetailsFragment (or Activity)
+            Navigation.findNavController(v).navigate(R.id.nav_categories, bundle);
         });
     }
 
-    //number of objects to display in the list
     @Override
     public int getItemCount() {
         return list.size();
     }
 
-    //VIEWHOLDER
-    //hold object of view of one line and save references to his elements (image & text)
-    public class ViewHolder extends RecyclerView.ViewHolder {
-
-        //references to the views for each data item
+    // ViewHolder class to hold references to the views
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         TextView name;
         CardView cardView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
-            imageView= itemView.findViewById(R.id.category_img);
-            name= itemView.findViewById(R.id.category_title);
+            imageView = itemView.findViewById(R.id.category_img);
+            name = itemView.findViewById(R.id.category_title);
             cardView = itemView.findViewById(R.id.homeCard);
         }
     }
 }
-
-
-

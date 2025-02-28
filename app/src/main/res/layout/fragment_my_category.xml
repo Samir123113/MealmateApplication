@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.categories.CategoryFragment">
+    tools:context=".category.CategoeryFragment">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -17,8 +17,8 @@
 
         <Spinner
             android:id="@+id/spinner_my_category"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="250dp"
+            android:layout_height="62dp"
             android:layout_marginStart="80dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="80dp"

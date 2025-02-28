@@ -24,7 +24,7 @@ import com.example.myrecipebook.activities.MapDetailActivity;
 import com.example.myrecipebook.activities.MyRecipesActivity;
 import com.example.myrecipebook.activities.SettingsActivity;
 import com.example.myrecipebook.activities.UploadRecipeActivity;
-import com.example.myrecipebook.activities.WeeklyPlanActivity;
+import com.example.myrecipebook.activities.DailyMealPlanActivity;
 import com.example.myrecipebook.activities.WelcomeActivity;
 import com.example.myrecipebook.databinding.ActivityMainBinding;
 import com.example.myrecipebook.models.UserData;
@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         checkLogin();
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Set up the app bar configuration for navigation
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_categories, R.id.nav_my_recipes, R.id.nav_profile, R.id.nav_uploadRecipe, R.id.nav_map)
+                R.id.nav_home, R.id.nav_categories, R.id.nav_my_recipes, R.id.nav_profile, R.id.nav_upload_recipe, R.id.nav_map)
                 .setOpenableLayout(drawerLayout)
                 .build();
 
@@ -124,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent(MainActivity.this, UploadRecipeActivity.class));
                     break;
                 case R.id.nav_weekly_plan:
-                    startActivity(new Intent(MainActivity.this, WeeklyPlanActivity.class));
+                    startActivity(new Intent(MainActivity.this, DailyMealPlanActivity.class));
                     break;
                 case R.id.nav_grocery_list:
                     startActivity(new Intent(MainActivity.this, GroceryListActivity.class));

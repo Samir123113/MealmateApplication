@@ -45,10 +45,18 @@
     <string name="phone_number_input_field">Phone number input field</string>
     <string name="enter_phone_number">Enter Phone Number</string>
     <string name="enter_your_message_here">Enter your message here</string>
+    <string name="add_recipe">add_recipe</string>
 
     <string-array name="meal_types_array">
         <item>Breakfast</item>
         <item>Lunch</item>
         <item>Dinner</item>
     </string-array>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+
 </resources>

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,17 +13,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myrecipebook.R;
 import com.example.myrecipebook.models.Recipe;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
-
-    private Context context;
     private List<Recipe> recipeList;
+    private Context context;
 
-    public RecipeAdapter(Context context, List<Recipe> recipeList) {
-        this.context = context;
+    public RecipeAdapter(List<Recipe> recipeList, Context context) {
         this.recipeList = recipeList;
+        this.context = context;
     }
 
     @NonNull
@@ -34,9 +36,14 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     @Override
     public void onBindViewHolder(@NonNull RecipeViewHolder holder, int position) {
         Recipe recipe = recipeList.get(position);
-        holder.textViewName.setText(recipe.getName());
-        holder.textViewIngredients.setText(recipe.getIngredients());
-        holder.textViewMealTypes.setText(recipe.getMealTypes());
+        holder.title.setText(recipe.getTitle());
+        holder.description.setText(recipe.getDescription());
+        holder.duration.setText(recipe.getDuration());
+        holder.servings.setText(recipe.getServings());
+        Picasso.get().load(recipe.getImageUrl()).into(holder.image);
+
+
+        // Set up delete and purchase button actions here if needed
     }
 
     @Override
@@ -44,14 +51,28 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         return recipeList.size();
     }
 
-    static class RecipeViewHolder extends RecyclerView.ViewHolder {
-        TextView textViewName, textViewIngredients, textViewMealTypes;
+    public interface OnRecipeActionListener {
+        void onEditRecipe(Recipe recipe);
+
+        void onDeleteRecipe(String recipeId);
+
+        void onMarkAsPurchased(String recipeId);
+    }
+
+    public static class RecipeViewHolder extends RecyclerView.ViewHolder {
+        TextView title, description, duration, servings;
+        ImageView image;
+        ImageButton btnDelete, btnPurchase;
 
         public RecipeViewHolder(@NonNull View itemView) {
             super(itemView);
-            textViewName = itemView.findViewById(R.id.text_view_name);
-            textViewIngredients = itemView.findViewById(R.id.text_view_ingredients);
-            textViewMealTypes = itemView.findViewById(R.id.text_view_meal_types);
+            title = itemView.findViewById(R.id.recipe_title);
+            description = itemView.findViewById(R.id.recipe_description);
+            duration = itemView.findViewById(R.id.recipe_duration);
+            servings = itemView.findViewById(R.id.recipe_servings);
+            image = itemView.findViewById(R.id.recipe_image);
+            btnDelete = itemView.findViewById(R.id.btn_delete);
+            btnPurchase = itemView.findViewById(R.id.btn_purchase);
         }
     }
 }

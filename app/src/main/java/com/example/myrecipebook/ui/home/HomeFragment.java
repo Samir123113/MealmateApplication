@@ -71,4 +71,7 @@ public class HomeFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
+    public void btn_upload_Activity(View view) {
+    }
 }
